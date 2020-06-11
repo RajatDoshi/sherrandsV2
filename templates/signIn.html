@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Log In to Sherrands</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/signin.css') }}">
+
+</head>
+
+<body>
+  <h2>Login Form</h2>
+
+  <form actions="/login" method="POST">
+    <div class="error_message">
+      <p> {{ errorMessage }} </p>
+    </div>
+
+    <div class="container">
+      <label for="email"><b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspEmail</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required><br>
+
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required><br>
+          
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="cancel_button" style="background-color:#f1f1f1">
+<!--      <button type="button" class="cancel_button">Cancel</button>
+ -->     <button onclick="location.href = '/';" id="cancel_button" class="cancel_button">Cancel</button>
+    </div>
+  </form>
+</body>
+</html>

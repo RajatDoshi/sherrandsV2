@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>Sherrands</title>
+		<meta charset="UTF-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+		<script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js'></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+	</head>
+	<body>
+		<header id="homeHeader">
+			<div class="row">
+				<ul class="main-nav">
+					<li class="active"><a href="/"> Home </a></li>
+					<li><a href="#aboutHeader"> About </a></li>
+					{% if userType == "user" %}
+						<li><a href="/groceryList#groceryList"> Grocery List </a></li>
+					{% endif %}
+					{% if signInStatus == "Sign Out"%}
+						<li><a href="/signout"> {{signInStatus}} </a></li>					
+					{% else %}
+						<li><a href="/login"> Sign In </a></li>
+						<li><a href="#id03" data-toggle="modal"> Sign Up </a></li>
+					{% endif %}
+
+				</ul>
+			</div>
+
+			<div class="title">
+				<h1> Sherrands </h1>
+			</div>
+		</header>
+
+		<header id="aboutHeader">
+			<br><h3> What is Sherrands? </h3><br>
+			<p> Sherrands is a community-based grocery-delivery app to make delivery faster and more affordable. We realized that a consequence of COVID-19 is that small businesses lose much of their revenue as consumers flock towards large corporation's e-commerce platform when shopping. We wanted to give a platform to small businesses to sell their products online while also building a logistics pipeline to ensure speedy and affordable delivery.</p><br>
+
+			<p> We are challenging basic delivery models by allowing users to be both a shopper and a deliverer on the platform. The idea is that if you, the ordinary shopper, are making a trip to your local grocery store, you would be willing to pick up a few extra grocery bags to delivery to a neighbor on your way home for some extra pocket money because it doesn't add much to your commute. </p>
+
+			<div class="rowPhoto">
+			  <div class="columnPhoto">
+			  	<h4> Step 1 </h4><br>
+			    <img src="https://2rdnmg1qbg403gumla1v9i2h-wpengine.netdna-ssl.com/wp-content/uploads/sites/3/2019/06/handWristPain-939030682-770x553-650x428.jpg" alt="First" style="width:100%" height="450">
+			  </div>
+			  <div class="columnPhoto">
+			  	<h4> Step 2 </h4><br>
+			    <img src="https://www.vmcdn.ca/f/files/mountainviewtoday/import/9/2018/02/GG-20170411-OLD0801-304119959-AR.jpeg" alt="Second" style="width:100%" height="450">
+			  </div>
+			  <div class="columnPhoto">
+			  	<h4> Step 3 </h4><br>
+			    <img src="https://www.pymnts.com/wp-content/uploads/2020/02/Evolv-Ventures-Grocery-Delivery-eCommerce-Fulfillment.jpg" alt="Third" style="width:100%" height="450">
+			  </div>
+			</div>
+			<br>
+		      <span class="b"> Input Your Grocery List into our System</span> 
+		      <span class="b"> Neighbor Collects your Groceries at Local Stores </span>
+		      <span class="b"> Recieve Your Groceries at Your Door Step </span>
+
+<!-- 			<div style="text-align: center">
+				<a href="/signUp">Get Started Now</a>
+			</div> -->
+		</header>
+
+		<div id="id03" class="modal">
+			<form class="modal-content animate" action="/processSignUp" method="POST">
+			    <h2 style="text-align: center">Sign Up</h2><br>
+			    <div class="containerForm">
+			      <label for="acctType">Select Account Type:</label>
+			        <select class="select-css" name="userType">
+			            <option value="User">User</option>
+			            <option value="Business">Business</option>
+			        </select>
+			        <input type="submit" value="Submit">
+			    </div>
+			</form>
+		</div>
+	</body>
+</html>
