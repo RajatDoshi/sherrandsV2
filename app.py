@@ -4,6 +4,8 @@ from flask import Flask, render_template, url_for, request, redirect, flash, ses
 import pyrebase
 import json
 import stripe
+import pandas as pd
+import csv
 
 app = Flask(__name__)
 app.secret_key = '#d\xe9X\x00\xbe~Uq\xebX\xae\x82\x1fs\t\xb4\x99\xa3\x87\xe6.\xd1_'
@@ -95,6 +97,14 @@ def getInventoryData():
     if inventoryDataDict != None:
         inventoryDataList = [value for value in inventoryDataDict.values()]
     return inventoryDataList
+
+#FINISH THIS CODE
+@app.route('/addItemCSV', methods=['POST'])
+def addItemCSV():
+    f = request.files['csvfile']
+    file = f.read()
+    print(file)
+    return redirect('/addItem#inventory')
 
 @app.route('/addToGroceryList', methods=['POST'])
 def addToGroceryList():

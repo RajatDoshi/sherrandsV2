@@ -118,6 +118,12 @@
           Add Item
         </button>
 
+        <form class="getCSVData" action="/addItemCSV" enctype="multipart/form-data" method="POST">
+          <input type="file" name="csvfile" value=""><br>
+          <input type="submit" name="submit" value="Submit">
+        </form>
+
+
         <div id="id02" class="modal">
             <form class="modal-content animate" action="/addItem" method="POST">
                 <h2 style="text-align: center">Add Inventory Item</h2>
