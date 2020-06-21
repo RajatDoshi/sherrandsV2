@@ -1,11 +1,12 @@
-#FLASK_APP=app.py FLASK_ENV=development flask run --port 4082
+#FLASK_APP=app.py FLASK_ENV=development flask run --port 4040
 
-from flask import Flask, render_template, url_for, request, redirect, flash, session
+from flask import Flask, render_template, url_for, request, redirect, flash, session, jsonify, send_file
 import pyrebase
 import json
 import stripe
 import pandas as pd
 import csv
+import codecs
 
 app = Flask(__name__)
 app.secret_key = '#d\xe9X\x00\xbe~Uq\xebX\xae\x82\x1fs\t\xb4\x99\xa3\x87\xe6.\xd1_'
@@ -67,6 +68,14 @@ def getGroceryData():
         groceryDataList = [value for value in groceryDataDict.values()]
     return groceryDataList
 
+@app.route('/search', methods=['GET'])
+def search():
+    imageSrcList = [{"url": "https://hips.hearstapps.com/hmg-prod/images/pumpkin-chocolate-chip-cookies-horizontal-1529964207.jpg", "label": "cookies"}, {"url": "https://duncanhines.com/sites/g/files/qyyrlu736/files/images/products/chewy-fudge-brownie-mix-15600.png", "label": "brownies"}] * 6
+    return render_template('search.html', imageSrcList=imageSrcList, initItem="cookie")
+
+@app.route('/searchStageTwo/<imageLabel>')
+def searchStageTwo(imageLabel):
+    return imageLabel
 
 @app.route('/addItem', methods=['GET', 'POST'])
 def addItem():
@@ -98,13 +107,47 @@ def getInventoryData():
         inventoryDataList = [value for value in inventoryDataDict.values()]
     return inventoryDataList
 
-#FINISH THIS CODE
-@app.route('/addItemCSV', methods=['POST'])
-def addItemCSV():
-    f = request.files['csvfile']
-    file = f.read()
-    print(file)
+@app.route('/download', methods=['POST'])
+def download():
+    path = "Template.csv"
+    return send_file(path, as_attachment=True)
+
+
+@app.route('/addItemCSV/<store>', methods=['POST'])
+def addItemCSV(store):
+    flask_file = request.files['csvfile']
+    if not flask_file:
+        return redirect("/addItem#inventory")
+    data = []
+    stream = codecs.iterdecode(flask_file.stream, 'utf-8')
+    try:
+        for row in csv.reader(stream, dialect=csv.excel):
+            if row:
+                data.append(row)
+    except UnicodeDecodeError:
+        return redirect('/addItem#inventory')
+    prodStore = store
+    for i in range(1, len(data)):
+        try:
+            prodName = data[i][0]
+            
+            try:
+                prodPrice = float(data[i][1])
+            except:
+                break
+
+            prodSize = data[i][2]
+            
+            try:
+                prodQuantity = int(data[i][3])
+            except:
+                prodQuantity = 1
+        except:
+            break
+        prod_var = {"Store":prodStore, "Name":prodName, "Price":prodPrice, "Size":prodSize, "Quantity":prodQuantity}
+        db.child("inventoryData").child(str(prodStore+prodName+prodSize)).set(prod_var)
     return redirect('/addItem#inventory')
+
 
 @app.route('/addToGroceryList', methods=['POST'])
 def addToGroceryList():

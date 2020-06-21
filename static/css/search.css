@@ -1,0 +1,35 @@
+#myInput {
+    width: 70%;
+    font-size: 16px; 
+    padding: 12px 20px 12px 40px; 
+    border: 1px solid #ddd; 
+    margin-left:15%;
+    margin-right:15%;
+    text-align: center;
+}
+
+.header {
+	font-family: sans-serif;
+	text-align: center;
+	text-transform: uppercase;
+	color: #336B6B;
+	font-size: 28px;
+}
+
+.image-table img {
+	width:250px;
+	height:250px;
+	padding: 5px;
+}
+
+.member {
+	display: inline-block;
+}
+
+.member p {
+	text-align: center;
+}
+
+.signin {
+	text-align: right;
+}

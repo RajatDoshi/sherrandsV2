@@ -74,7 +74,7 @@
                 <th>Product Name</th>
                 <th>Product Price</th>
                 <th>Product Size </th>
-                <th>Quantity Left</th>
+                <th>Stock Quantity</th>
               <!--   <th>Actions</th> -->
             </tr>
             </thead>
@@ -117,9 +117,17 @@
         <button type="button" class="btn-prim" data-toggle="modal" data-target="#id02">
           Add Item
         </button>
-
-        <form class="getCSVData" action="/addItemCSV" enctype="multipart/form-data" method="POST">
-          <input type="file" name="csvfile" value=""><br>
+        <br><br><br><h2 style="text-align: center"> Upload Your Product Inventory In Two Steps </h3><br>
+        <h6> 1) Download Template Below </h6><br>
+        <div id="template-download">
+          <form action="/download" method="POST">
+              <input type="submit" type="submit" name="submit" value="Download"/>
+          </form> 
+        </div>
+        <br>
+        <h6> 2) Edit It Then Upload It Here </h6><br>
+        <form action="/addItemCSV/{{nameOfStore}}" enctype="multipart/form-data" method="POST">
+          <input class="upload-submit" type="file" name="csvfile" value="">
           <input type="submit" name="submit" value="Submit">
         </form>
 
@@ -135,7 +143,7 @@
                     <input type="text" id="price" name="price" required><br>
                     <label for="Size">Product Size:</label><br>
                     <input type="text" id="size" name="size" required><br>
-                    <label for="Quantity">Produce Quantity:</label><br>
+                    <label for="Quantity">Stock Quantity:</label><br>
                     <input type="text" id="quantity" name="quantity" required><br>
 
                 	<input type="submit" value="Submit">
